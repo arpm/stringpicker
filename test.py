@@ -1,6 +1,6 @@
-"""This files tests the strinpicker module"""
+"""This file tests the strinpicker module"""
 
-from stringpicker import pick_random, format_output, longest_string
+from stringpicker import string_picker
 
 QUESTIONS = ["GULAG", "Magnitogorsk", "The Great Terror",
              "collectivization", "The New Woman", "Fordism", "NSDAP",
@@ -44,8 +44,5 @@ QUESTIONS = ["GULAG", "Magnitogorsk", "The Great Terror",
              "Neo-Liberalism", "Structural Adjustment", "The HIV Epidemic",
              "The War on Terror", "The Rise of China", "Climate Change"]
 
-SELECTED_STRINGS = pick_random(QUESTIONS, 15)
-LONGEST_STRING = longest_string(SELECTED_STRINGS)
-OUTPUT_STRING = format_output(SELECTED_STRINGS, LONGEST_STRING, 3)
-
-print OUTPUT_STRING
+OUTPUT = string_picker(QUESTIONS, 15, 3)
+print OUTPUT

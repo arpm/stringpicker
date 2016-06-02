@@ -62,6 +62,14 @@ def format_output(input_list, longest_length, elements_per_line):
     return output_string
 
 
+def string_picker(input_list, number_of_picks, elements_per_line):
+    """Does all the magic"""
+    selected = pick_random(input_list, number_of_picks)
+    longest = longest_string(selected)
+    output = format_output(selected, longest, elements_per_line)
+    return output
+
+
 def elements_length_average(input_list):
     """Return the average length of every string element of a list"""
     concatenated = ''.join(input_list)
