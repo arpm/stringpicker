@@ -45,4 +45,4 @@ QUESTIONS = ["GULAG", "Magnitogorsk", "The Great Terror",
              "The War on Terror", "The Rise of China", "Climate Change"]
 
 OUTPUT = string_picker(QUESTIONS, 15, 3)
-print OUTPUT
+print(OUTPUT)
