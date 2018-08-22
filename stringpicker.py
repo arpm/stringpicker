@@ -2,6 +2,7 @@
 of picks desired by the user"""
 
 from random import randint  # imports the random module
+import sys
 
 
 def pick_random(input_list, number_of_picks):
@@ -77,3 +78,12 @@ def elements_length_average(input_list):
     average = len(concatenated) / float(len(input_list))
     average = "{0:.2f}".format(average)
     return average
+
+
+if __name__ == "__main__":
+    FILE = open(sys.argv[1], 'r')
+
+    QUESTIONS = [line.rstrip() for line in FILE]
+
+    OUTPUT = string_picker(QUESTIONS, int(sys.argv[2]), int(sys.argv[3]))
+    print(OUTPUT)
