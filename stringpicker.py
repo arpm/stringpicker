@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """Picks random elements of a list given the list itself and the number
 of picks desired by the user"""
 
@@ -5,34 +7,57 @@ import random
 import sys
 
 
-def string_picker(input_list, number_of_picks, elements_per_line):
+def longest_string_length(inputList):
+    return len(max(inputList, key=len))
+
+
+def file_to_list(inputFile):
+    file = open(inputFile, 'r')
+    questions = [line.rstrip() for line in file]
+    return questions
+
+
+def string_picker(inputFile, numberOfPicks, elementsPerLine):
     """Formats and print the list of inputs"""
 
-    selected = random.sample(input_list, number_of_picks)
+    inputList = file_to_list(inputFile)
 
-    output_string = ""
+    selected = random.sample(inputList, numberOfPicks)
+    longestStringLength = longest_string_length(selected)
 
-    for index in range(0, len(selected)):
+    outputString = ""
 
-        # this is the number of spaces required to make the output readable
-        spaces = len(max(selected, key=len)) - len(selected[index]) + 2
+    for question in selected:
 
-        # splits every line of output given the 'elements_per_line'
-        output_string += "\n" if index % elements_per_line == 0 else ""
+        currentStringLength = len(question)
+        currentStringIndex = selected.index(question)
+        currentStringNumberFormat = "{:0>2} ".format(currentStringIndex + 1)
+        padding = (longestStringLength - currentStringLength + 2) * " "
 
-        # this is the format that is going to be used for the output
-        output_string += ("{:0>2d}".format(index + 1) + " "
-                          + selected[index] + " " * spaces)
+        if currentStringIndex % elementsPerLine == 0:
+            outputString += "\n"
 
-    output_string += "\n"
+        outputString += currentStringNumberFormat + question + padding
 
-    return output_string
+    outputString += "\n"
+
+    # for index in range(0, len(selected)):
+
+    #     current_string_length = len(selected[index])
+
+    #     # this is the number of spaces required to make the output readable
+    #     spaces =  longest_string_length - current_string_length + PADDING
+
+    #     # splits every line of output given the 'elementsPerLine'
+    #     output_string += "\n" if index % elementsPerLine == 0 else ""
+
+    #     # this is the format that is going to be used for the output
+    #     output_string += ("{:0>2d}".format(index + 1) + " "
+    #                       + selected[index] + " " * spaces)
+
+    return outputString
 
 
 if __name__ == "__main__":
-    FILE = open(sys.argv[1], 'r')
-
-    QUESTIONS = [line.rstrip() for line in FILE]
-
-    OUTPUT = string_picker(QUESTIONS, int(sys.argv[2]), int(sys.argv[3]))
+    OUTPUT = string_picker(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
     print(OUTPUT)
