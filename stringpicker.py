@@ -1,38 +1,58 @@
-"""Picks random elements of a list given the list itself and the number
-of picks desired by the user"""
+#!/usr/bin/env python
+
+"""Outputs a list of randomly selected strings given the name of an
+input file, the number of strings desired and the number of strings
+per line desired"""
 
 import random
 import sys
 
+DIGITS_FORMAT = {1: "{:0>1} ", 2: "{:0>2} ", 3: "{:0>3} ", 4: "{:0>4} ",
+                 5: "{:0>5} ", 6: "{:0>6} ", 7: "{:0>7} ", 8: "{:0>8} "}
 
-def string_picker(input_list, number_of_picks, elements_per_line):
-    """Formats and print the list of inputs"""
 
-    selected = random.sample(input_list, number_of_picks)
+def file_to_list(inputFile):
+    """Returns the input file as a list"""
+    file = open(inputFile, 'r')
+    strings = [line.rstrip() for line in file]
+    file.close()
+    return strings
 
-    output_string = ""
 
-    for index in range(0, len(selected)):
+def longest_string_length(inputList):
+    """Returns the length of the longest string from the input list"""
+    return len(max(inputList, key=len))
 
-        # this is the number of spaces required to make the output readable
-        spaces = len(max(selected, key=len)) - len(selected[index]) + 2
 
-        # splits every line of output given the 'elements_per_line'
-        output_string += "\n" if index % elements_per_line == 0 else ""
+def string_picker(inputFile, numberOfStrings, stringsPerLine):
+    """Returns the randomly selected strings as a formatted string"""
 
-        # this is the format that is going to be used for the output
-        output_string += ("{:0>2d}".format(index + 1) + " "
-                          + selected[index] + " " * spaces)
+    inputList = file_to_list(inputFile)
 
-    output_string += "\n"
+    selectedStrings = random.sample(inputList, numberOfStrings)
+    longestStringLength = longest_string_length(selectedStrings)
+    numberOfDigits = len(str(numberOfStrings))
 
-    return output_string
+    outputString = ""
+
+    for string in selectedStrings:
+
+        currentStringLength = len(string)
+        currentStringIndex = selectedStrings.index(string)
+        currentStringNumber = DIGITS_FORMAT[numberOfDigits].format(
+                              currentStringIndex + 1)
+        padding = (longestStringLength - currentStringLength + 2) * " "
+
+        if currentStringIndex % stringsPerLine == 0:
+            outputString += "\n"
+
+        outputString += currentStringNumber + string + padding
+
+    outputString += "\n"
+
+    return outputString
 
 
 if __name__ == "__main__":
-    FILE = open(sys.argv[1], 'r')
-
-    QUESTIONS = [line.rstrip() for line in FILE]
-
-    OUTPUT = string_picker(QUESTIONS, int(sys.argv[2]), int(sys.argv[3]))
+    OUTPUT = string_picker(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
     print(OUTPUT)
