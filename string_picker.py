@@ -7,9 +7,6 @@ per line desired"""
 import random
 import sys
 
-DIGITS_FORMAT = {1: "{:0>1} ", 2: "{:0>2} ", 3: "{:0>3} ", 4: "{:0>4} ",
-                 5: "{:0>5} ", 6: "{:0>6} ", 7: "{:0>7} ", 8: "{:0>8} "}
-
 
 def file_to_list(inputFile):
     """Returns the input file as a list"""
@@ -39,8 +36,8 @@ def string_picker(inputFile, numberOfStrings, stringsPerLine):
 
         currentStringLength = len(string)
         currentStringIndex = selectedStrings.index(string)
-        currentStringNumber = DIGITS_FORMAT[numberOfDigits].format(
-                              currentStringIndex + 1)
+        currentStringNumber = "{:0>{width}} ".format(currentStringIndex + 1,
+                                                     width=numberOfDigits)
         padding = (longestStringLength - currentStringLength + 2) * " "
 
         if currentStringIndex % stringsPerLine == 0:
