@@ -32,15 +32,14 @@ def string_picker(inputFile, numberOfStrings, stringsPerLine):
 
     outputString = ""
 
-    for string in selectedStrings:
+    for index, string in enumerate(selectedStrings):
 
         currentStringLength = len(string)
-        currentStringIndex = selectedStrings.index(string)
-        currentStringNumber = "{:0>{width}} ".format(currentStringIndex + 1,
+        currentStringNumber = "{:0>{width}} ".format(index + 1,
                                                      width=numberOfDigits)
         padding = (longestStringLength - currentStringLength + 2) * " "
 
-        if currentStringIndex % stringsPerLine == 0:
+        if index % stringsPerLine == 0:
             outputString += "\n"
 
         outputString += currentStringNumber + string + padding
